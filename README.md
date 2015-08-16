@@ -6,9 +6,9 @@ Again I have loosely following one of the getting started tutorails: http://gett
 
 Although my focus was not on building another lamp stack, instead I wanted to install postgres.
 
-This time, instead on the trusty64 (14.04) Ubuntu box image, I used an opscode box Centos 6.4 , as this is pre-configured to make the chef-provisioning simpler ... this wasn't mentinoed in the above tutorial which is focused on clients in the cloud e.g. rackspace and not vagrant machine. However after some googling I found: http://selvakumar.me/opscode-chef-setup-and-sample-cookbook-reference/.
+This time, instead on the trusty64 (14.04) Ubuntu box image, I used an opscode box running centos 6.4 (opscode-centos-6.4), as this is pre-configured to make the chef-provisioning simpler ... this wasn't mentinoed in the above tutorial which is focused on clients in the cloud e.g. rackspace and not vagrant/virtualbox local VMs. However after some googling I found: http://selvakumar.me/opscode-chef-setup-and-sample-cookbook-reference/.
 
-So how does it work, well the first steps are similar to chef-solo:
+So how did it work, well the first steps are similar to chef-solo:
   - step01_setup_chef_and_download_postgres_cookbook.sh
 
 although I'm now add both my personal and my organization keys:
@@ -20,7 +20,7 @@ There is also a node key which needs to be copied:
 ```sh
 sudo cp /vagrant/chefclient01.pem /etc/chef/client.pem
 ```
-Naturally all these code most downloaded for yourself i.e. you have registered your user-id, organization-id and node-id from https://manage.chef.io/.
+Naturally all these keys most downloaded for yourself i.e. you have registered your user-id, organization-id and node-id, after you have registered these within https://manage.chef.io/.
 
 Lastly at the end of this script, I use knife to download the postgresql cookbook:
 ```sh
@@ -42,6 +42,7 @@ knife cookbook upload build-essential
 knife cookbook upload chef-sugar
 knife cookbook upload openssl
 ```
+
 Now stepping carefully through the tutorial, I creates a pg_db role, adding to "recipe[postgresql::server]" to the run_list:
 
 ```sh
@@ -773,7 +774,7 @@ chefclient01 Running handlers complete
 chefclient01 Chef Client finished, 15/16 resources updated in 39.848145274 seconds
 ```
  
-and some post install details:
+and finally some post install process details, showing my vanilla postgres instance running:
 
 ```sh
 [vagrant@chefclient01 chef-repo]$  ps -ef|grep pos
